@@ -118,7 +118,7 @@ def run(code_path, test_path, common_dir):
         # Run tests on code
         output_path = f"{job_path}/raw.json"
         with open(output_path, "w") as output:
-            args = ['node', compiled_tests_path]
+            args = [NODE_PATH, compiled_tests_path]
             env = {"NODE_PATH": NODE_MODULES_PATH}
             subprocess.run(args,
                            check=True,
