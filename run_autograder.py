@@ -167,7 +167,7 @@ if __name__ == '__main__':
                 student_code_path = os.path.join(root, f)
             if "tests" in f:
                 student_test_path = os.path.join(root, f)
-    assert student_common_path and student_code_path and student_test_path
+    # assert student_common_path and student_code_path and student_test_path
     student_common_dir = dirname(student_common_path)
 
     os.chdir(SOURCE)  # FIXME: is this needed?
