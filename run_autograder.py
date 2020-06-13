@@ -173,8 +173,8 @@ if __name__ == '__main__':
     os.chdir(SOURCE)  # FIXME: is this needed?
 
     # Fix import statements in student's common file
-	if student_common_path:
-		fix_imports(student_common_path, student_code_path, SUBMISSION)
+    if student_common_path:
+        fix_imports(student_common_path, student_code_path, SUBMISSION)
 
     # Fix import statements in student's code file
     fix_imports(student_code_path, student_code_path, SUBMISSION)
