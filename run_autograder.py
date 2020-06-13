@@ -64,10 +64,8 @@ def compile_tests(test_path, error_file):
     ]
     env = {"NODE_PATH": NODE_MODULES_PATH}
     try:
-        result = subprocess.run(args, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
-        print(result.stderr)
+        subprocess.run(args, check=True, stderr=error_file, env=env)
     except Exception as e:
-        print(traceback.format_exc())
         raise CompileError(e)
 
     # Check for compile error
