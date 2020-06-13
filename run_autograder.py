@@ -3,7 +3,6 @@ from os.path import basename, dirname
 import shutil
 import subprocess
 import json
-import traceback
 from prehook_lib import ImportFixer
 
 NODE_PATH = "nodejs"
@@ -111,7 +110,6 @@ def run(code_path, test_path, common_dir):
             compiled_tests_path = compile_tests(test_path, error)
         except CompileError:
             print(f"Compilation failed: {code_path} {test_path}")
-            print(traceback.format_exc())
             report_error("Compilation")
             return
 
