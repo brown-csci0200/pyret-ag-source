@@ -63,6 +63,7 @@ def compile_tests(test_path, error_file):
     ]
     env = {"NODE_PATH": NODE_MODULES_PATH}
     try:
+        print("Compiling tests...")
         subprocess.run(args, check=True, stderr=error_file, env=env)
     except Exception as e:
         raise CompileError(e)
@@ -76,16 +77,19 @@ def compile_tests(test_path, error_file):
 
 def run(code_path, test_path, common_dir):
     # Make sure cache dir exists
+    print("Making sure cache dir exists...")
     if not os.path.exists(CACHE_DIR):
         os.mkdir(CACHE_DIR)
 
     # Make a directory for the job
     job_name = f"{basename(code_path)};{basename(test_path)}"
     job_path = f"{RESULTS}/{job_name}"
+    print("Making directory for the job at " + job_path)
     os.mkdir(job_path)
 
     # Copy tests into the job directory
     copied_test_path = f"{job_path}/tests.arr"
+    print("Copying tests into the job directory at " + copied_test_path)
     shutil.copy(test_path, copied_test_path)
     test_path = copied_test_path
 
@@ -101,6 +105,7 @@ def run(code_path, test_path, common_dir):
             output.write(json.dumps(error))
 
     # Fix test imports for this job
+    print("Fixing test imports for this job...")
     fix_imports(test_path, code_path, common_dir)
 
     error_output = f"{job_path}/error.txt"
@@ -119,6 +124,7 @@ def run(code_path, test_path, common_dir):
         # Run tests on code
         output_path = f"{job_path}/raw.json"
         with open(output_path, "w") as output:
+            print("Running tests on code...")
             args = [NODE_PATH, compiled_tests_path]
             env = {"NODE_PATH": NODE_MODULES_PATH}
             subprocess.run(args,
@@ -130,8 +136,10 @@ def run(code_path, test_path, common_dir):
     if nonempty(error_output):
         with open(error_output, "r") as error:
             if "memory" in error.read():
+                print("Out of memory error occurred.")
                 report_error("OutOfMemory")
             else:
+                print("Runtime error occurred.")
                 report_error("Runtime")
 
     if nonempty(output_path):
@@ -143,6 +151,7 @@ def run(code_path, test_path, common_dir):
             output_path
         ]
         with open(f"{job_path}/results.json", "w") as output:
+            print("Writing results for this job...")
             with open(error_output, "a") as error:
                 subprocess.run(args, check=True, stdout=output, stderr=error)
 
