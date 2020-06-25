@@ -172,6 +172,11 @@ if __name__ == '__main__':
     student_common_dir = dirname(student_common_path)
 
     os.chdir(SOURCE)  # FIXME: is this needed?
+    
+    # Printing paths for debugging
+    print("COMMON PATH: " + student_common_path)
+    print("CODE PATH: " + student_code_path)
+    print("TEST PATH: " + student_test_path)
 
     # Fix import statements in student's common file
     if student_common_path:
