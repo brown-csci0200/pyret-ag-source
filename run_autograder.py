@@ -180,13 +180,16 @@ if __name__ == '__main__':
 
     # Fix import statements in student's common file
     if student_common_path:
+        print("Fixing import statements in student's common file...")
         fix_imports(student_common_path, student_code_path, SUBMISSION)
 
     # Fix import statements in student's code file
+    print("Fixing import statements in student's code file...")
     fix_imports(student_code_path, student_code_path, SUBMISSION)
 
     # Run tests against student code
     for root, _, files in os.walk(TESTS):
+        print("Running test suite against student code...")
         for f in files:
             if f != "README":
                 test = os.path.join(root, f)
@@ -194,6 +197,7 @@ if __name__ == '__main__':
 
     # Run wheats against student tests
     for root, _, files in os.walk(WHEATS):
+        print("Running wheats against student tests...")
         for f in files:
             if f != "README":
                 wheat = os.path.join(root, f)
@@ -202,6 +206,7 @@ if __name__ == '__main__':
 
     # Run chaffs against student tests
     for root, _, files in os.walk(CHAFFS):
+        print("Running chaffs against student tests...")
         for f in files:
             if f != "README":
                 chaff = os.path.join(root, f)
