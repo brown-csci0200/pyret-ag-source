@@ -15,7 +15,7 @@ class ImportFixer:
     def fix_import(self, name, location, filename=None):
         rel_loc = os.path.relpath(location, start=self.target_dir)
         print("Substituting " + rf'file("{rel_loc}/{filename}")'
-            if filename else rf'file("{rel_loc}/\1")' + "for " + re.findall(rf'my-gdrive\(["\'](.*-{name}\.arr)["\']\)', self.content)
+            if filename else rf'file("{rel_loc}/\1")' + "for " + re.findall(rf'my-gdrive\(["\'](.*-{name}\.arr)["\']\)', self.content))
         self.content = re.sub(
             rf'my-gdrive\(["\'](.*-{name}\.arr)["\']\)',
             rf'file("{rel_loc}/{filename}")'
