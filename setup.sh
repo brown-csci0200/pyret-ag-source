@@ -14,7 +14,3 @@ git clone https://github.com/brown-cs111/result-processing.git
 
 # Unpack pyret zip
 unzip "source/autograder/pyret-lang.zip" -d pyret-lang
-cd pyret-lang
-npm install
-make
-cd ..
