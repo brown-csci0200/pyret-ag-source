@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Format the submission
+pip3 install pyparsing
 python3 /autograder/source/autograder/remove_comments.py /autograder/submission/*.arr
 
 # Run the actual autograder
