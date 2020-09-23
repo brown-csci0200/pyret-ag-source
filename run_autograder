@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Format the submission
+python3 /autograder/source/autograder/remove_comments.py /autograder/submission/*.arr
+
 # Run the actual autograder
 cd /autograder/source/autograder
 python3 run_autograder.py
