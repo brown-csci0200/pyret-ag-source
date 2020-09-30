@@ -93,13 +93,19 @@ def run(code_path, test_path, common_dir):
     shutil.copy(test_path, copied_test_path)
     test_path = copied_test_path
     
-    if "wheat" in basename(code_path) or "chaff" in basename(code_path):
+    if "wheat" in code_path or "chaff" in code_path:
         try:
             data = ""
             with open(test_path, "r", encoding="utf-8") as test:
                data = test.read()
+               
+               # removing these to add include in the correct order
+               data.replace("provide *\n", "")
+               data.replace("provide-types *\n", "")
             
             with open(test_path, "w", encoding="utf-8") as test:
+                test.write("provide *\n")
+                test.write("provide-types *\n")
                 test.write("include file(\"" + code_path + "\")\n")
                 test.write(data)
         except Exception as ex:
