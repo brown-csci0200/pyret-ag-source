@@ -8,7 +8,7 @@ if len(sys.argv) - 1 == 1:
     filename = sys.argv[1]
 
     try:
-        with open(filename, 'r') as file:
+        with open(filename, 'r', encoding="utf-8") as file:
             data = file.read()
 
             multiline_comment = pyparsing.nestedExpr("#|", "|#").suppress()
