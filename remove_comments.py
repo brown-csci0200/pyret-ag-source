@@ -17,7 +17,7 @@ try:
         data = multiline_comment.transformString(data)
 
         data = re.sub(r'#.*\n', '\n', data)
-        data = re.sub(r'include my-gdrive.*', "", data)
+        data = re.sub(r'include my-gdrive\(\"hw3-code-ignore\.arr\"\)', "", data)
 
     os.remove(filename)
     output = open(filename, "w", encoding="utf-8")
