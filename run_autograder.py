@@ -3,6 +3,7 @@ from os.path import basename, dirname
 import shutil
 import subprocess
 import json
+import re
 from prehook_lib import ImportFixer
 
 NODE_PATH = "nodejs"
@@ -98,15 +99,13 @@ def run(code_path, test_path, common_dir):
             data = ""
             with open(test_path, "r", encoding="utf-8") as test:
                data = test.read()
-               
-               # removing these to add include in the correct order
-               data.replace("provide *\n", "")
-               data.replace("provide-types *\n", "")
             
             with open(test_path, "w", encoding="utf-8") as test:
                 test.write("provide *\n")
                 test.write("provide-types *\n")
                 test.write("include file(\"" + code_path + "\")\n")
+                
+                data = re.sub(r'provide.*[\n]', '', data)
                 test.write(data)
         except Exception as ex:
             print("ERROR: Error while adding include to wheat or chaff!")
