@@ -100,7 +100,7 @@ def run(code_path, test_path, common_dir):
                data = test.read()
             
             with open(test_path, "w", encoding="utf-8") as test:
-                test.write("include file(" + code_path + ")\n")
+                test.write("include file(\"" + code_path + "\")\n")
                 test.write(data)
         except Exception as ex:
             print("ERROR: Error while adding include to wheat or chaff!")
