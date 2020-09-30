@@ -92,6 +92,20 @@ def run(code_path, test_path, common_dir):
     print("Copying tests into the job directory at " + copied_test_path)
     shutil.copy(test_path, copied_test_path)
     test_path = copied_test_path
+    
+    if "wheat" in basename(code_path) or "chaff" in basename(code_path):
+        try:
+            data = ""
+            with open(test_path, "r", encoding="utf-8") as test:
+               data = test.read()
+            
+            with open(test_path, "w", encoding="utf-8") as test:
+                test.write("include file(" + code_path + ")\n")
+                test.write(data)
+        except Exception as ex:
+            print("ERROR: Error while adding include to wheat or chaff!")
+            print(ex)
+               
 
     def report_error(error):
         with open(f"{job_path}/results.json", "w") as output:
