@@ -7,6 +7,9 @@ data = ''
 filename = sys.argv[1]
 
 try:
+    with open(filename, 'a+', encoding="utf-8") as first:
+        first.write("\n")
+        
     with open(filename, 'r', encoding="utf-8") as file:
         data = file.read()
 
