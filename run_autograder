@@ -2,6 +2,7 @@
 
 # Format the submission
 pip3 install pyparsing
+echo "Removing comments from student submission files..."
 python3 /autograder/source/autograder/remove_comments.py /autograder/submission/*.arr
 
 # Run the actual autograder
