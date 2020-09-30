@@ -17,7 +17,7 @@ if len(sys.argv) - 1 == 1:
             data = re.sub(r'#.*\n', '\n', data)
 
         os.remove(filename)
-        output = open(filename, "w")
+        output = open(filename, "w", encoding="utf-8")
 
         if 'provide *' not in data:
             output.write('provide *\n')
