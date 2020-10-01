@@ -31,7 +31,7 @@ for test in raw:
             tests_passed["wheat"] = all([t["passed"] for t in check_block["tests"]])
     elif "chaff" in test["code"]:
         chaff_name = basename(test["code"]).replace(".arr", "")
-        if "Err" in test["result"]: 
+        if "Err" in test["result"] or len(test["result"]["Ok"]) == 0: 
             gen_error(chaff_name, test["result"]["Err"])
         else:
             assert len(test["result"]["Ok"]) == 1  # assuming student only wrote 1 check block in Examplar
