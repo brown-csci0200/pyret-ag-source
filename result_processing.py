@@ -16,15 +16,18 @@ tests_errored = []
 chaff_names = set()
 using_examplar = "wheat" in points
 
-def gen_error(filename, message):
-    for name, score in points[filename].items():
-        tests_errored.append({"name": name, "score": 0, "max_score": points[filename][name], "output": f"Error: {message}", "visibility": visibility})
+def gen_error(filename, message, examplar=False):
+    if examplar:
+        tests_errored.append({"name": filename, "score": 0, "max_score": points[filename], "output": f"Error: {message}", "visibility": visibility})
+    else:
+        for name, score in filename.items():
+            tests_errored.append({"name": name, "score": 0, "max_score": score, "output": f"Error: {message}", "visibility": visibility})
 
 # populate testsuite_tests 
 for test in raw:
     if "wheat" in test["code"]:
         if "Err" in test["result"]: 
-            gen_error("wheat", test["result"]["Err"])
+            gen_error("wheat", test["result"]["Err"], True)
         else:
             assert len(test["result"]["Ok"]) == 1
             check_block = test["result"]["Ok"][0]
@@ -32,9 +35,9 @@ for test in raw:
     elif "chaff" in test["code"]:
         chaff_name = basename(test["code"]).replace(".arr", "")
         if "Err" in test["result"]: 
-            gen_error(chaff_name, test["result"]["Err"])
+            gen_error(chaff_name, test["result"]["Err"], True)
         elif len(test["result"]["Ok"]) == 0:
-            gen_error(chaff_name, "Missing file")
+            gen_error(chaff_name, "Missing file", True)
         else:
             assert len(test["result"]["Ok"]) == 1  # assuming student only wrote 1 check block in Examplar
             check_block = test["result"]["Ok"][0]
@@ -68,5 +71,3 @@ output = {"stdout_visibility": "hidden", "tests": tests_scores + tests_errored}
   
 with open(output_filename, "w+") as f:
     js.dump(output, f)
-
-
