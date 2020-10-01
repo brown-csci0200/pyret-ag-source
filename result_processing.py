@@ -18,7 +18,7 @@ using_examplar = "wheat" in points
 
 def gen_error(filename, message, examplar=False):
     if examplar:
-        tests_errored.append({"name": filename, "score": 0, "max_score": points[filename], "output": f"Error: {message}", "visibility": visibility})
+        tests_errored.append({"name": filename, "score": 0, "max_score": points["examplar"][filename], "output": f"Error: {message}", "visibility": visibility})
     else:
         for name, score in filename.items():
             tests_errored.append({"name": name, "score": 0, "max_score": score, "output": f"Error: {message}", "visibility": visibility})
@@ -28,6 +28,8 @@ for test in raw:
     if "wheat" in test["code"]:
         if "Err" in test["result"]: 
             gen_error("wheat", test["result"]["Err"], True)
+        elif len(test["result"]["Ok"]) == 0:
+            gen_error("wheat", "Missing file", True)
         else:
             assert len(test["result"]["Ok"]) == 1
             check_block = test["result"]["Ok"][0]
