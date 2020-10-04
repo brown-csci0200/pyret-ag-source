@@ -41,7 +41,6 @@ for test in raw:
         elif len(test["result"]["Ok"]) == 0:
             gen_error(chaff_name, "Missing file", True)
         else:
-            assert len(test["result"]["Ok"]) == 1  # assuming student only wrote 1 check block in Examplar
             something_failed = False
             for check_block in test["result"]["Ok"]:
                 if not(all([t["passed"] for t in check_block["tests"]])):
