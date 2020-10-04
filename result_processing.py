@@ -42,8 +42,11 @@ for test in raw:
             gen_error(chaff_name, "Missing file", True)
         else:
             assert len(test["result"]["Ok"]) == 1  # assuming student only wrote 1 check block in Examplar
-            check_block = test["result"]["Ok"][0]
-            tests_passed[chaff_name] = not(all([t["passed"] for t in check_block["tests"]]))
+            something_failed = False
+            for check_block in test["result"]["Ok"]:
+                if not(all([t["passed"] for t in check_block["tests"]])):
+                    something_failed = True
+            tests_passed[chaff_name] = something_failed
             chaff_names.add(chaff_name)
     else:  # test suite
         if "Err" in test["result"]: 
