@@ -20,7 +20,7 @@ def gen_error(filename, message, examplar=False):
     if examplar:
         tests_errored.append({"name": filename, "score": 0, "max_score": points["examplar"][filename], "output": f"Error: {message}", "visibility": visibility})
     else:
-        for name, score in filename.items():
+        for name, score in points[filename].items():
             tests_errored.append({"name": name, "score": 0, "max_score": score, "output": f"Error: {message}", "visibility": visibility})
 
 # populate testsuite_tests 
