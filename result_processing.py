@@ -31,9 +31,11 @@ for test in raw:
         elif len(test["result"]["Ok"]) == 0:
             gen_error("wheat", "Missing file", True)
         else:
-            assert len(test["result"]["Ok"]) == 1
-            check_block = test["result"]["Ok"][0]
-            tests_passed["wheat"] = all([t["passed"] for t in check_block["tests"]])
+            something_failed = False
+            for check_block in test["result"]["Ok"]:
+                if not(all([t["passed"] for t in check_block["tests"]])):
+                    something_failed = True
+            tests_passed["wheat"] = not(something_failed)
     elif "chaff" in test["code"]:
         chaff_name = basename(test["code"]).replace(".arr", "")
         if "Err" in test["result"]: 
