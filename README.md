@@ -1,8 +1,8 @@
 # Gradescope Pyret Autograding
 
-The `result-processing` project handles converting from pyret's output to the
-format gradescope expects. 
+To prepare the autograder for use with Gradescope: 
 
-To prepare the autograder on gradescope, place wheats, chaffs, tests, and
-stencil files in their respective directories, and zip the contents of the
-respective assignment branch in the `pyret-assignments` repo.
+1. Create/find the respective assignment branch in the [`pyret-assignments` repository](https://github.com/brown-cs111/pyret-assignments).
+2. Place wheats, chaffs, tests, and stencil files in their respective directories.
+3. Update `points.json` to match the wheats, chaffs, and tests.
+4. Zip the contents of the branch and upload to Gradescope.
