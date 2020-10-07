@@ -14,7 +14,8 @@ with open(input_filename) as raw_f, open(points_filename) as points_f:
 tests_passed = {}  # name -> bool  (keys same as for points)
 tests_errored = []
 chaff_names = set()
-using_examplar = "wheat" in points
+using_examplar = "examplar" in points
+if using_examplar: assert("wheat" in points["examplar"])
 
 def gen_error(filename, message, examplar=False):
     if examplar:
@@ -27,9 +28,9 @@ def gen_error(filename, message, examplar=False):
 for test in raw:
     if "wheat" in test["code"]:
         if "Err" in test["result"]: 
-            gen_error("wheat", test["result"]["Err"], True)
+            pass #gen_error("wheat", test["result"]["Err"], True)
         elif len(test["result"]["Ok"]) == 0:
-            gen_error("wheat", "Missing file", True)
+            pass #gen_error("wheat", "Missing file", True)
         else:
             something_failed = False
             for check_block in test["result"]["Ok"]:
@@ -39,9 +40,9 @@ for test in raw:
     elif "chaff" in test["code"]:
         chaff_name = basename(test["code"]).replace(".arr", "")
         if "Err" in test["result"]: 
-            gen_error(chaff_name, test["result"]["Err"], True)
+            pass #gen_error(chaff_name, test["result"]["Err"], True)
         elif len(test["result"]["Ok"]) == 0:
-            gen_error(chaff_name, "Missing file", True)
+            pass #gen_error(chaff_name, "Missing file", True)
         else:
             something_failed = False
             for check_block in test["result"]["Ok"]:
@@ -60,19 +61,37 @@ tests_scores = []  # list("name": str, "score": float, "max_score": float, "outp
 for name in tests_passed:
     # assign points
     all_names_in_points = {i[0]: i[1] for i in {item for sublist in [i.items() for i in points.values()] for item in sublist}}
+    
     if name not in all_names_in_points: 
         print(f"Test {name} not in points json")
     else:
         max_score = all_names_in_points[name]
-        if name in chaff_names:  # we're dealing with a chaff
-            score = all_names_in_points[name] if (tests_passed["wheat"] and tests_passed[name]) else 0
-            message = "Passed all tests in this block!" if score == max_score else ("Wheat failed" if not(tests_passed["wheat"]) else "Failed some tests in this block")
-            tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": visibility})
+        if name in chaff_names or name == "wheat":
+            if "examplar" not in points or "num-for-full-credit" not in points["examplar"]:
+                # we're dealing with a chaff but aren't handling it as a percentage of chaffs passed
+                score = all_names_in_points[name] if ("wheat" in tests_passed and tests_passed["wheat"] and tests_passed[name]) else 0
+                
+                message = "Failed some tests in this block"
+                if score == max_score: message = "Passed all tests in this block!"
+                elif "wheat" not in tests_passed: message = "Wheat errored"
+                elif not tests_passed["wheat"]: message = "Wheat failed"
+
+                tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": visibility})
         else: 
             score = all_names_in_points[name] if tests_passed[name] else 0
             message = "Passed all tests in this block!" if score == max_score else "Failed some tests in this block"
             tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": visibility})
     
+if using_examplar and "examplar" in points and "num-for-full-credit" in points["examplar"]:
+    chaffs_passed, total_chaffs, total_for_100_chaffs = 0, len(chaff_names), points["examplar"]["num-for-full-credit"]
+    if "wheat" in tests_passed and tests_passed["wheat"]:
+        for name in chaff_names: 
+            if name in tests_passed and tests_passed[name]: chaffs_passed += 1
+        message = f"{chaffs_passed}/{total_chaffs} buggies caught; need {total_for_100_chaffs} for full credit"
+    else:
+        message = "Wheat failed"
+    tests_scores.append({"name": "buggies", "score": min(total_for_100_chaffs, chaffs_passed), "max_score": total_for_100_chaffs, "output": message, "visibility": visibility})
+
 output = {"stdout_visibility": "hidden", "tests": tests_scores + tests_errored}
   
 with open(output_filename, "w+") as f:
