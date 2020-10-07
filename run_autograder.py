@@ -156,7 +156,7 @@ def run(code_path, test_path, common_dir):
                 print(f"ERROR: failure running tests on code")
 
     if nonempty(error_output):
-        with open(error_output, "r") as error:
+        with open(error_output, "r", encoding="utf-8") as error:
             if "memory" in error.read():
                 print("Out of memory error occurred.")
                 report_error("OutOfMemory")
