@@ -146,11 +146,14 @@ def run(code_path, test_path, common_dir):
             print("Running tests on code...")
             args = [NODE_PATH, compiled_tests_path]
             env = {"NODE_PATH": NODE_MODULES_PATH}
-            subprocess.run(args,
+            try:
+                    subprocess.run(args,
                            check=True,
                            stdout=output,
                            stderr=error,
                            env=env)
+            except Exception as ex:
+                print(f"ERROR: failure running tests on code")
 
     if nonempty(error_output):
         with open(error_output, "r") as error:
