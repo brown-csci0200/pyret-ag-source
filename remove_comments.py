@@ -20,7 +20,7 @@ try:
         data = re.sub(r'include image\n', "include tables\n", data)
         data = re.sub(r'->\s*Image\s*:', ":", data)
         table_pattern = r'include shared-gdrive\(\"cs111-2020\.arr\", \"1imMXJxpNWFCUaawtzIJzPhbDuaLHtuDX\"\)'
-        data = re.sub(, "", data, count=len(findall(table_pattern, data))-1)
+        data = re.sub(table_pattern, "", data, count=len(findall(table_pattern, data))-1)
 
     os.remove(filename)
     output = open(filename, "w", encoding="utf-8")
