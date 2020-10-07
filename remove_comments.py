@@ -19,6 +19,7 @@ try:
         data = re.sub(r'#.*\n', '\n', data)
         data = re.sub(r'include image\n', "include tables\n", data)
         data = re.sub(r'->\s*Image\s*:', ":", data)
+        data = re.sub(r'include shared-gdrive\(\"cs111-2020\.arr\", \"1imMXJxpNWFCUaawtzIJzPhbDuaLHtuDX\"\)', "", data, count=1)
 
     os.remove(filename)
     output = open(filename, "w", encoding="utf-8")
