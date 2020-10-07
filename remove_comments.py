@@ -18,6 +18,7 @@ try:
 
         data = re.sub(r'#.*\n', '\n', data)
         data = re.sub(r'include image\n', "", data)
+        data = re.sub(r'->\s*Image\s*:', ":", data)
 
     os.remove(filename)
     output = open(filename, "w", encoding="utf-8")
