@@ -76,11 +76,11 @@ for name in tests_passed:
                 elif "wheat" not in tests_passed: message = "Wheat errored"
                 elif not tests_passed["wheat"]: message = "Wheat failed"
 
-                tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": visibility})
+                tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": "visible" if "on submission" in name else visibility})
         else: 
             score = all_names_in_points[name] if tests_passed[name] else 0
             message = "Passed all tests in this block!" if score == max_score else "Failed some tests in this block"
-            tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": visibility})
+            tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": "visible" if "on submission" in name else visibility})
     
 if using_examplar and "examplar" in points and "num-for-full-credit" in points["examplar"]:
     chaffs_passed, total_chaffs, total_for_100_chaffs = 0, len(chaff_names), points["examplar"]["num-for-full-credit"]
