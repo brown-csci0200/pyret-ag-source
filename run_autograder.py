@@ -134,10 +134,7 @@ def run(code_path, test_path, common_dir):
             compiled_tests_path = compile_tests(test_path, error)
         except CompileError as e:
             print(f"Compilation failed: {code_path} {test_path}")
-            if hasattr(e, 'message'):
-                print(e.message)
-            else:
-                print(dir(e))
+            print(e)
             report_error("Compilation")
             return
 
