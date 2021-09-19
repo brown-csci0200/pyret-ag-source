@@ -136,6 +136,8 @@ def run(code_path, test_path, common_dir):
             print(f"Compilation failed: {code_path} {test_path}")
             if hasattr(e, 'message'):
                 print(e.message)
+            else:
+                print(dir(e))
             report_error("Compilation")
             return
 
