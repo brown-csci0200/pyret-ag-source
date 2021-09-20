@@ -135,6 +135,7 @@ def run(code_path, test_path, common_dir):
         except CompileError as e:
             print(f"Compilation failed: {code_path} {test_path}")
             print(e)
+            os.listdir("/autograder")
             report_error("Compilation")
             return
 
