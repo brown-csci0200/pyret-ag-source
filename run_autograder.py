@@ -135,8 +135,8 @@ def run(code_path, test_path, common_dir):
         except CompileError as e:
             print(f"Compilation failed: {code_path} {test_path}")
             print(e)
-            if os.path.isdir("/autograder/pyret-lang"):
-                print(os.listdir("/autograder/pyret-lang"))
+            if os.path.isdir("/autograder/pyret-lang/pyret-lang"):
+                print(os.listdir("/autograder/pyret-lang/pyret-lang"))
                 if os.path.isdir("/autograder/pyret-lang/build"):
                     print(os.listdir("/autograder/pyret-lang/build"))
                     if os.path.isdir("/autograder/pyret-lang/build/phaseA"):
