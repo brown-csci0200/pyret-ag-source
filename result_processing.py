@@ -58,7 +58,6 @@ for test in raw:
                 tests_passed[check_block["name"]] = all([t["passed"] for t in check_block["tests"]])
 
 tests_scores = []  # list("name": str, "score": float, "max_score": float, "output": str, "visibility": "after_published"
-total = 0
 for name in tests_passed:
     # assign points
     all_names_in_points = {i[0]: i[1] for i in {item for sublist in [i.items() for i in points.values()] for item in sublist}}
@@ -80,7 +79,6 @@ for name in tests_passed:
                 tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": "visible" if "on submission" in name else visibility})
         else: 
             score = all_names_in_points[name] if tests_passed[name] else 0
-            total += score
             message = "Passed all tests in this block!" if score == max_score else "Failed some tests in this block"
             tests_scores.append({"name": name, "score": score, "max_score": max_score, "output": message, "visibility": "visible" if "on submission" in name else visibility})
     
@@ -94,7 +92,7 @@ if using_examplar and "examplar" in points and "num-for-full-credit" in points["
         message = "Wheat failed"
     tests_scores.append({"name": "buggies", "score": min(total_for_100_chaffs, chaffs_passed), "max_score": total_for_100_chaffs, "output": message, "visibility": visibility})
 
-output = {"stdout_visibility": "hidden", "tests": tests_scores + tests_errored, "score": score}
+output = {"stdout_visibility": "hidden", "tests": tests_scores + tests_errored}
   
 with open(output_filename, "w+") as f:
     js.dump(output, f)
