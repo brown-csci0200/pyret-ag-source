@@ -22,6 +22,7 @@ try:
         table_pattern = r'include shared-gdrive\(\"cs111-2020\.arr\", \"1imMXJxpNWFCUaawtzIJzPhbDuaLHtuDX\"\)'
         num_occur = len(re.findall(table_pattern, data))
         if num_occur > 1: data = re.sub(table_pattern, "", data, count=num_occur-1)
+        data = re.sub(r'use context essentials2021', '', data)
 
     os.remove(filename)
     output = open(filename, "w", encoding="utf-8")
