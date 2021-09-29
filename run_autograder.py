@@ -65,6 +65,7 @@ def compile_tests(test_path, error_file):
     env = {"NODE_PATH": NODE_MODULES_PATH}
     try:
         print("Compiling tests...")
+        print("test")
         subprocess.run(args, check=True, stderr=1, env=env)
     except Exception as e:
         raise CompileError(e)
