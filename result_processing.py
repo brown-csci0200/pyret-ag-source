@@ -56,8 +56,11 @@ for test in raw:
 
             for k in test:
                 res_string += k
-                for kk in test[k]:
-                    res_string += "(" + kk + ", " + test[k][kk] +") "
+                if type(test[k]) == str:
+                    res_string += "(" + k + ", " + test[k] +") "
+                else:
+                    for kk in test[k]:
+                        res_string += "(" + kk + ", " + test[k][kk] +") "
             gen_error(basename(dirname(test["tests"].split(";")[1])), res_string)
         else:
             for check_block in test["result"]["Ok"]:
