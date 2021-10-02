@@ -104,7 +104,7 @@ def run(code_path, test_path, common_dir):
             with open(test_path, "w", encoding="utf-8") as test:
                 test.write("provide *\n")
                 test.write("provide-types *\n")
-                test.write("include file(\"../" + os.path.relpath(code_path) + "\")\n")
+                test.write("include file(\"" + os.path.relpath(code_path) + "\")\n")
                 
                 data = re.sub(r'provide.*[\n]', '', data)
                 test.write(data)
