@@ -107,6 +107,7 @@ def run(code_path, test_path, common_dir):
                 test.write("include file(\"" + os.path.relpath(code_path) + "\")\n")
                 
                 data = re.sub(r'provide.*[\n]', '', data)
+                data = re.sub(r'include my-gdrive("*-code-ignore[\n]', '', data)
                 test.write(data)
         except Exception as ex:
             print("ERROR: Error while adding include to wheat or chaff!")
