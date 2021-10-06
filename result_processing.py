@@ -52,16 +52,7 @@ for test in raw:
             chaff_names.add(chaff_name)
     else:  # test suite
         if "Err" in test["result"]:
-            res_string = ""
-
-            for k in test:
-                res_string += k
-                if type(test[k]) == str:
-                    res_string += "(" + k + ", " + test[k] +") "
-                else:
-                    for kk in test[k]:
-                        res_string += "(" + kk + ", " + test[k][kk] +") "
-            gen_error(basename(dirname(test["tests"].split(";")[1])), res_string)
+            gen_error(basename(dirname(test["tests"].split(";")[1])), test["result"]["Err"])
         else:
             for check_block in test["result"]["Ok"]:
                 tests_passed[check_block["name"]] = all([t["passed"] for t in check_block["tests"]])
