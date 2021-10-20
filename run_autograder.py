@@ -68,6 +68,7 @@ def compile_tests(test_path, error_file):
         print("test")
         subprocess.run(args, check=True, stderr=1, env=env)
     except Exception as e:
+        print(e)
         raise CompileError(e)
 
     # Check for compile error
