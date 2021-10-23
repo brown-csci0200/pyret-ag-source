@@ -63,13 +63,17 @@ def compile_tests(test_path, error_file):
         "src/scripts/standalone-configA.json",
     ]
     env = {"NODE_PATH": NODE_MODULES_PATH}
-    try:
-        print("Compiling tests...")
-        print("test")
-        subprocess.run(args, check=True, stderr=1, env=env)
-    except Exception as e:
-        print(e)
-        raise CompileError(e)
+    RETRIES = 2
+
+    for i in range(2):
+        try:
+            print("Compiling tests...")
+            print("test")
+            subprocess.run(args, check=True, stderr=1, env=env)
+        except Exception as e:
+            print(e)
+            if i == 1:
+                raise CompileError(e)
 
     # Check for compile error
     if not nonempty(compiled_tests_path):
@@ -138,12 +142,6 @@ def run(code_path, test_path, common_dir):
         except CompileError as e:
             print(f"Compilation failed: {code_path} {test_path}")
             print(e)
-            if os.path.isdir("/autograder/pyret-lang/pyret-lang"):
-                print(os.listdir("/autograder/pyret-lang/pyret-lang"))
-                if os.path.isdir("/autograder/pyret-lang/build"):
-                    print(os.listdir("/autograder/pyret-lang/build"))
-                    if os.path.isdir("/autograder/pyret-lang/build/phaseA"):
-                        print(os.listdir("/autograder/pyret-lang/build/phaseA"))
             report_error("Compilation")
             return
 
