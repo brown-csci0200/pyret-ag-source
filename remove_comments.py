@@ -31,8 +31,6 @@ try:
         output.write('provide *\n')
     if 'provide-types *' not in data:
         output.write('provide-types *\n')
-    if 'include essentials2021' not in data:
-        output.write('include essentials2021\n')
 
     output.write(data)
     output.close()
