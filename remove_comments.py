@@ -22,7 +22,7 @@ try:
         table_pattern = r'include shared-gdrive\(\"dcic-2021\", \"1wyQZj_L0qqV9Ekgr9au6RX2iqt2Ga8Ep\"\)'
         num_occur = len(re.findall(table_pattern, data))
         if num_occur > 1: data = re.sub(table_pattern, "", data, count=num_occur-1)
-        data = re.sub(r'use context essentials2021', '', data)
+        data = re.sub(r'use context essentials2021', 'include essentials2021', data)
 
     os.remove(filename)
     output = open(filename, "w", encoding="utf-8")
