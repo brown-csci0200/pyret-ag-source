@@ -27,9 +27,13 @@ try:
     os.remove(filename)
     output = open(filename, "w", encoding="utf-8")
 
-    if 'provide *' not in data:
+    # if 'provide *' not in data:
+    #     output.write('provide *\n')
+    # if 'provide-types *' not in data:
+    #     output.write('provide-types *\n')
+    if 'provide ' not in data:  # TODO this is less aggressive. Keep?
         output.write('provide *\n')
-    if 'provide-types *' not in data:
+    if 'provide-types ' not in data:
         output.write('provide-types *\n')
 
     if 'include essentials2021' not in data:
